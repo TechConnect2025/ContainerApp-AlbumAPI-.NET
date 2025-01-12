@@ -6,8 +6,7 @@ param environmentName string = 'myenv'
 param resourceGroupName string = 'rg-myenv'
 param resourceToken string = toLower(uniqueString(subscription().id, location, resourceGroupName))
 param containerAppSrcName string = 'src${resourceToken}'
-param keyVaultAzurekeyvault0Name string = 'ekeyvault0${resourceToken}'
-param appInsightsAzureapplicationinsights0Name string = 'ninsights0${resourceToken}'
+param keyVaultKeyvault0Name string = 'keyvault0${resourceToken}'
 param containerAppEnvName string = 'env${resourceToken}'
 param containerRegistryName string = 'acr${resourceToken}'
 
@@ -65,30 +64,19 @@ module containerAppSrcDeployment 'containerapp.bicep' = {
 
 // Deploy an Azure Keyvault
 
-module keyVaultAzurekeyvault0Deployment 'keyvault.bicep' = {
-	name: 'key-vault-azurekeyvault0-deployment'
+module keyVaultKeyvault0Deployment 'keyvault.bicep' = {
+	name: 'key-vault-keyvault0-deployment'
 	scope: resourceGroup
 	params: {
 		location: location
-		name: keyVaultAzurekeyvault0Name 
-	}
-}
-
-// Deploy an Azure Application Insights
-
-module appInsightsAzureapplicationinsights0Deployment 'applicationinsights.bicep' = {
-	name: 'app-insights-azureapplicationinsights0-deployment'
-	scope: resourceGroup
-	params: {
-		location: location
-		name: appInsightsAzureapplicationinsights0Name 
+		name: keyVaultKeyvault0Name 
 	}
 }
 
 
 
 output containerAppSrcId string = containerAppSrcDeployment.outputs.id
-output keyVaultAzurekeyvault0Id string = keyVaultAzurekeyvault0Deployment.outputs.id
+output keyVaultKeyvault0Id string = keyVaultKeyvault0Deployment.outputs.id
 output containerRegistrySrcId string = containerRegistry.outputs.id
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerRegistry.outputs.loginServer
 

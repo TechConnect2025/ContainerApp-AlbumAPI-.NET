@@ -10,10 +10,6 @@ The generator for Bicep generates three types of files: `main.bicep`, `main.para
 
     For each type of resources, a Bicep file is generated as a module. These Bicep files are used once or multiple times in `main.bicep` for actual deployments. Each template contains the parameters it takes from `main.bicep` at the top, followed by the basic configurations of the resources and the outputs at the end. You can modify the basic configurations of the resources in the templates or customize the parameters of a resource instance in the deployments in `main.bicep`. Below is a brief introduction to the generated Bicep files for all resources and their dependencies.
 
-    - Azure Application Insights
-
-        `applicationinsights.bicep` defines the Application Insights. The connection string and instrumentation key are output for use by compute resources.
-
     - Azure Container Apps
 
         `containerappenv.bicep` defines the Container Apps Environment and the Log Analytics (for monitoring) that are prerequisites for the creation of Container Apps. Only one Container Apps Environment is created and is shared by all Container Apps services.
