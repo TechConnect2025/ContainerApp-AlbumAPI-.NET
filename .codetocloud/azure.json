@@ -11,14 +11,6 @@
           "name": "src"
         }
       ]
-    },
-    {
-      "type": "azurekeyvault",
-      "instances": [
-        {
-          "name": "keyvault0"
-        }
-      ]
     }
   ],
   "bindings": [],
