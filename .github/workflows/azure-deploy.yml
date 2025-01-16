@@ -7,12 +7,11 @@ on:
 
 env:
     LOCATION: westeurope
-    TEST_IMAGE_REPOSITORY: ~/TechConnect-Repo/ContainerApp-AlbumAPI-.NET/src/Dockerfile
     TEST_IMAGE_TAG: 'bs-${{ github.sha }}'
     DEPLOYMENT_BICEP_PATH: |
         infra/main.bicep
     DOCKERFILE_PATH: |
-        src/Dockerfile   
+        ~/TechConnect-Repo/ContainerApp-AlbumAPI-.NET/src/Dockerfile
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -37,12 +36,12 @@ jobs:
     - name: Build and deploy Container App
       uses: ./
       with:
-        appSourcePath: ${{ github.workspace }}
+        appSourcePath: ${{ env.DOCKERFILE_PATH }}
         acrName: acrlpwpok2xmi6t6 
         acrUsername: acrlpwpok2xmi6t6
         acrPassword: ${{ secrets.ACR_PASSWORD }}
         containerAppName: acasrclpwpok2xmi6t6
         containerAppEnvironment: acaenvlpwpok2xmi6t6
-        resourceGroup: TC2025RGDemo1
+        resourceGroup: TC2025RGDemo2
         imageToBuild: acrlpwpok2xmi6t6.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
         dockerfilePath: ${{ env.DOCKERFILE_PATH }} 
