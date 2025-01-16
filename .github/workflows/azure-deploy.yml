@@ -7,7 +7,7 @@ on:
 
 env:
     LOCATION: westeurope
-    TEST_IMAGE_REPOSITORY: src/Dockerfile
+    TEST_IMAGE_REPOSITORY: ~/TechConnect-Repo/ContainerApp-AlbumAPI-.NET/src/Dockerfile
     TEST_IMAGE_TAG: 'bs-${{ github.sha }}'
     DEPLOYMENT_BICEP_PATH: |
         infra/main.bicep
@@ -43,6 +43,6 @@ jobs:
         acrPassword: ${{ secrets.ACR_PASSWORD }}
         containerAppName: acasrclpwpok2xmi6t6
         containerAppEnvironment: acaenvlpwpok2xmi6t6
-        resourceGroup: TC2025RGDemo
+        resourceGroup: TC2025RGDemo1
         imageToBuild: acrlpwpok2xmi6t6.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
         dockerfilePath: ${{ env.DOCKERFILE_PATH }} 
