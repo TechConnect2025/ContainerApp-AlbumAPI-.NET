@@ -44,6 +44,6 @@ jobs:
         acrPassword: ${{ secrets.ACR_PASSWORD }}
         containerAppName: acasrclpwpok2xmi6t6
         containerAppEnvironment: acaenvlpwpok2xmi6t6
-        resourceGroup: TC2025RGDemo2
+        resourceGroup: TC2025RGDemo
         imageToBuild: acrlpwpok2xmi6t6.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
         dockerfilePath: ${{ env.DOCKERFILE_PATH }} 
