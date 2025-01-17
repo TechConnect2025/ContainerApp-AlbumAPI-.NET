@@ -33,24 +33,3 @@ jobs:
       run: |
         az deployment sub create --location ${{ env.LOCATION }} --template-file ${{ env.DEPLOYMENT_BICEP_PATH }} 
      
-    - uses: azure/docker-login@v2
-      with:
-          login-server: techconnect2025acr.azurecr.io
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-      
-    # Build and deploy the container app
-    - uses: actions/checkout@v2
-    - name: Build and deploy Container App
-      uses: azure/container-apps-deploy-action@v1
-      with:
-        appSourcePath: ${{ github.workspace }}/src
-        acrName: techconnect2025acr
-        acrUsername: techconnect2025acr
-        acrPassword: ${{ secrets.ACR_PASSWORD }}
-        containerAppName: acasrclpwpok2xmi6t6
-        containerAppEnvironment: acaenvlpwpok2xmi6t6
-        resourceGroup: TC2025RGDemo
-        imageToBuild: techconnect2025acr.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
-        dockerfilePath: ${{ env.DOCKERFILE_PATH }} 
-
