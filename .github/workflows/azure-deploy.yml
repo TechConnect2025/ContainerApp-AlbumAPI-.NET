@@ -35,12 +35,12 @@ jobs:
      
     - uses: azure/docker-login@v2
       with:
-          login-server: techconnect2025acr.azurecr.io
+          login-server: techconnect2025acr2.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
       
     - run: |
-          docker build . -t techconnect2025acr.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
-          docker push techconnect2025acr.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
+          docker build . -t techconnect2025acr2.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
+          docker push techconnect2025acr2.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
 
     
