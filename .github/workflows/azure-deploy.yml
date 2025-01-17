@@ -32,19 +32,18 @@ jobs:
       run: |
         az deployment sub create --location ${{ env.LOCATION }} --template-file ${{ env.DEPLOYMENT_BICEP_PATH }} 
      
-    - name: Checkout code
-      uses: actions/checkout@v2
 
     # Build and deploy the container app
+    - uses: actions/checkout@v2
     - name: Build and deploy Container App
-      uses: ./
+      uses: azure/container-apps-deploy-action@v1
       with:
-        appSourcePath: ${{ env.DOCKERFILE_PATH }}
+        appSourcePath: ${{ github.workspace }}/src
         acrName: acrlpwpok2xmi6t6 
         acrUsername: acrlpwpok2xmi6t6
         acrPassword: ${{ secrets.ACR_PASSWORD }}
         containerAppName: acasrclpwpok2xmi6t6
         containerAppEnvironment: acaenvlpwpok2xmi6t6
-        resourceGroup: TC2025RGDemo
+        resourceGroup: TC2025RGDemo1
         imageToBuild: acrlpwpok2xmi6t6.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
         dockerfilePath: ${{ env.DOCKERFILE_PATH }} 
