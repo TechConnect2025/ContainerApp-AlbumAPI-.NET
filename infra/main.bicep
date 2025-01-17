@@ -4,13 +4,13 @@ targetScope = 'subscription'
 
 param location string = 'westeurope'
 param environmentName string = 'tc2025workspacedemo'
-param resourceGroupName string = 'TC2025RGDemo1'
+param resourceGroupName string = 'TC2025RGDemo3'
 param resourceToken string = toLower(uniqueString(subscription().id, location, resourceGroupName))
 param containerAppSrcName string = 'acasrc${resourceToken}'
-param keyVaultKeyvault0Name string = 'keyvqlt0${resourceToken}'
+param keyVaultKeyvault0Name string = 'keyxxlt0${resourceToken}'
 param appInsightsLoganalytics0Name string = 'analytics0${resourceToken}'
 param containerAppEnvName string = 'acaenv${resourceToken}'
-param containerRegistryName string = 'acr${resourceToken}'
+param containerRegistryName string = 'techconnect2025acr'
 
 
 // Deploy an Azure Resource Group
