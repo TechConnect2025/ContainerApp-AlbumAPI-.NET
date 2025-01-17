@@ -8,7 +8,7 @@ on:
 env:
     LOCATION: westeurope
     TEST_IMAGE_TAG: 'bs-${{ github.sha }}'
-    TEST_IMAGE_REPOSITORY: 'ContainerApp-AlbumAPI-.NET'
+    TEST_IMAGE_REPOSITORY: 'AlbumAPI'
     DEPLOYMENT_BICEP_PATH: |
         infra/main.bicep
     DOCKERFILE_PATH: |
@@ -42,5 +42,3 @@ jobs:
     - run: |
           docker build . -t techconnect2025acr.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
           docker push techconnect2025acr.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
-
-    
