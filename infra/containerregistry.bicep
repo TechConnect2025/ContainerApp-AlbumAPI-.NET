@@ -5,14 +5,14 @@ param location string = resourceGroup().location
 param sku string = 'Standard'
 
 // 2022-02-01-preview needed for anonymousPullEnabled
-resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-02-01-preview' = {
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-02-01-preview'= {
 	name: name
 	location: location
 	sku: {
 		name: sku
 	}
 	properties: {
-		adminUserEnabled: false
+		adminUserEnabled: true
 		anonymousPullEnabled: true
 	}
 }
