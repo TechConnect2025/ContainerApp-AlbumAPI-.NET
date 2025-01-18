@@ -13,7 +13,7 @@ env:
     TEST_IMAGE_TAG: 'bs-${{ github.sha }}'
     TEST_IMAGE_REPOSITORY: 'albumapi_csharp'
     DOCKERFILE_PATH: |
-         /TechConnect-Repo/DEMOContainerApps-AlbumAPI-.NET/src/Dockerfile
+        src/Dockerfile
 
 jobs:
   build-and-deploy:
