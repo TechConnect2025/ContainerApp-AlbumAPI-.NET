@@ -1,4 +1,4 @@
-name: Deploy to Azure - Demo
+name: Deploy to Azure - Demo 1
 
 on:
   push:
