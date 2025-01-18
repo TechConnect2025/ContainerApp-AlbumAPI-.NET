@@ -33,17 +33,17 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ env.TEST_IMAGE_REPOSITORY }} . -f ${{ env.DOCKERFILE_PATH }}
+        docker build -t ${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }} . -f ${{ env.DOCKERFILE_PATH }}
 
     - name: Push Docker image to Azure Container Registry
       run: |
-        docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}
-        docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}
+        docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
+        docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
 
     - name: Deploy Bicep template
       run: |
         az deployment sub create --location ${{ env.LOCATION }} --template-file ${{ env.DEPLOYMENT_BICEP_PATH }} \
-        --parameters containerImage=${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}
+        --parameters containerImage=${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
 
     - name: Run integration tests
       run: |
