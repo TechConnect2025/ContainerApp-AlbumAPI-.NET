@@ -33,7 +33,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ env.TEST_IMAGE_REPOSITORY }} .
+        docker build -f ${{ env.DOCKERFILE_PATH }} -t ${{ env.TEST_IMAGE_REPOSITORY }} .
 
     - name: Push Docker image to Azure Container Registry
       run: |
