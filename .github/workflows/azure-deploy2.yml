@@ -13,7 +13,7 @@ env:
     TEST_IMAGE_TAG: 'bs-${{ github.sha }}'
     TEST_IMAGE_REPOSITORY: 'albumapi'
     DOCKERFILE_PATH: |
-         src/Dockerfile
+         ~/TechConnect-Repo/DEMOContainerApps-AlbumAPI-.NET/src/Dockerfile
 
 jobs:
   build-and-deploy:
@@ -33,7 +33,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }} -f '${{ env.DOCKERFILE_PATH }}' .
+        docker build -t ${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }} -f ${{ env.DOCKERFILE_PATH }} .
 
     - name: Push Docker image to Azure Container Registry
       run: |
