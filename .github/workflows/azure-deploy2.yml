@@ -16,7 +16,7 @@ env:
         src/Dockerfile
 
 jobs:
-  build-and-deploy:
+  azure_login:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -26,7 +26,11 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-             
+       
+  deploy_bicep_fies:
+    needs: azure_login
+    runs-on: unbuntu-latest
+    steps:
     - name: Set up Bicep CLI
       run: |
         az bicep install
@@ -34,19 +38,31 @@ jobs:
     - name: Deploy Bicep template
       run: |
         az deployment sub create --location ${{ env.LOCATION }} --template-file ${{ env.DEPLOYMENT_BICEP_PATH }}  
-     
+    
+  setup_docker:
+    needs: deploy_bicep_fies
+    runs-on: unbuntu-latest
+    steps:   
     - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
+  login_to_docker_hub:
+    needs: setup_docker
+    runs-on: unbuntu-latest
+    steps:
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+  login_acr_and_build_tag_push:
+    needs: login_to_docker_hub
+    runs-on: unbuntu-latest
+    steps:
     - name: Login / Build / Tag / Push
       run: |
         az acr login --name ${{ env.ACR_NAME }}
@@ -54,15 +70,18 @@ jobs:
         docker tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
         docker push ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
+  deploy_container_app:
+    needs: login_acr_and_build_tag_push
+    runs-on: unbuntu-latest
+    steps:
     - name: Deploy Container App
       uses: Azure/cli@v1
       with:
-       inlineScript: |
-        echo "Installing containerapp extension"
-        az extension add --name containerapp
-        echo "Starting Deploying"
-        az containerapp update  --name albumapi --resource-group techconnect2025rg2 --image ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} --cpu 1 --memory 1 --port 80 --environment-variables ASPNETCORE_ENVIRONMENT=Production
-    
+        inlineScript: |
+          echo "Installing containerapp extension"
+          az extension add --name containerapp
+          echo "Starting Deploying"
+          az containerapp update  --name albumapi --resource-group techconnect2025rg2 --image ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} --cpu 1 --memory 1 
     - name: Run integration tests
       run: |
         # Add commands to run your integration tests here
