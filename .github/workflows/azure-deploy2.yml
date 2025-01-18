@@ -37,12 +37,12 @@ jobs:
      
     - name: Build Docker image
       run: |
-          docker build -t ${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }} . -f ${{ env.DOCKERFILE_PATH }}
+          docker build -t ${{ env.TEST_IMAGE_REPOSITORY }} . -f ${{ env.DOCKERFILE_PATH }}
     
     - name: Push Docker image to Azure Container Registry
       run: |
           az acr login --name ${{ env.ACR_NAME }}
-          docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
+          docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}
 
     - name: Run integration tests
       run: |
