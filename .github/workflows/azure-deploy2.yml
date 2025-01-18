@@ -31,15 +31,14 @@ jobs:
       run: |
         az bicep install
       
-    - name: Build Docker image
-      run: |
-        docker build -t ${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }} . -f ${{ env.DOCKERFILE_PATH }}
-
     - name: Deploy Bicep template
       run: |
-          az deployment sub create --location ${{ env.LOCATION }} --template-file ${{ env.DEPLOYMENT_BICEP_PATH }} \
-          --parameters containerImage=${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
-          
+          az deployment sub create --location ${{ env.LOCATION }} --template-file ${{ env.DEPLOYMENT_BICEP_PATH }}  
+     
+    - name: Build Docker image
+      run: |
+          docker build -t ${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }} . -f ${{ env.DOCKERFILE_PATH }}
+    
     - name: Push Docker image to Azure Container Registry
       run: |
           az acr login --name ${{ env.ACR_NAME }}
