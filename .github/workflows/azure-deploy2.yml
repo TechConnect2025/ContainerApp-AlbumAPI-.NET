@@ -1,0 +1,51 @@
+name: Deploy to Azure - Demo
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+    ACR_NAME: techconnect2025acr2
+    LOCATION: westeurope
+    DEPLOYMENT_BICEP_PATH: |
+        infra/main.bicep
+    TEST_IMAGE_TAG: 'bs-${{ github.sha }}'
+    TEST_IMAGE_REPOSITORY: 'AlbumAPI'
+    DOCKERFILE_PATH: |
+        ~/TechConnect-Repo/ContainerApp-AlbumAPI-.NET/src/Dockerfile
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+             
+    - name: Set up Bicep CLI
+      run: |
+        az bicep install
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }} -f ${{ env.DOCKERFILE_PATH }} .
+
+    - name: Push Docker image to Azure Container Registry
+      run: |
+        docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
+        docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
+
+    - name: Deploy Bicep template
+      run: |
+        az deployment sub create --location ${{ env.LOCATION }} --template-file ${{ env.DEPLOYMENT_BICEP_PATH }} \
+        --parameters containerImage=${{ env.ACR_NAME }}.azurecr.io/${{ env.TEST_IMAGE_REPOSITORY }}:${{ env.TEST_IMAGE_TAG }}
+
+    - name: Run integration tests
+      run: |
+        # Add commands to run your integration tests here
+
