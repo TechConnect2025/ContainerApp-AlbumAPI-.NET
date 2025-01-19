@@ -61,7 +61,7 @@ jobs:
           echo "Installing containerapp extension"
           az extension add --name containerapp
           echo "Starting Deploying"
-          az containerapp update  --name albumapi --resource-group techconnect2025rg2 --image ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} --cpu 1 --memory 1 
+          az containerapp update  --name albumapi --resource-group TC2025RGDemo3 --image ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
     - name: Run integration tests
       run: |
         # Add commands to run your integration tests here
