@@ -7,9 +7,9 @@ param environmentName string = 'tc2025workspacedemo'
 param resourceGroupName string = 'TC2025RGDemo'
 param resourceToken string = toLower(uniqueString(subscription().id, location, resourceGroupName))
 param containerAppSrcName string = 'albumapi'
-param keyVaultKeyvault0Name string = 'keydaafbom0${resourceToken}'
+param keyVaultKeyvault0Name string = 'keydaaom0${resourceToken}'
 param appInsightsLoganalytics0Name string = 'analytics0${resourceToken}'
-param containerAppEnvName string = 'albumapi_env'
+param containerAppEnvName string = 'apienv${resourceToken}'
 param containerRegistryName string = 'techconnect2025acr2'
 
 
