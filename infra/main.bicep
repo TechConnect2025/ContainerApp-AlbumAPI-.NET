@@ -4,12 +4,12 @@ targetScope = 'subscription'
 
 param location string = 'westeurope'
 param environmentName string = 'tc2025workspacedemo'
-param resourceGroupName string = 'TC2025RGDemo1'
+param resourceGroupName string = 'TC2025RGDemo'
 param resourceToken string = toLower(uniqueString(subscription().id, location, resourceGroupName))
-param containerAppSrcName string = 'acasrc${resourceToken}'
-param keyVaultKeyvault0Name string = 'keydeefbom0${resourceToken}'
+param containerAppSrcName string = 'albumapi'
+param keyVaultKeyvault0Name string = 'keydaafbom0${resourceToken}'
 param appInsightsLoganalytics0Name string = 'analytics0${resourceToken}'
-param containerAppEnvName string = 'acaenv${resourceToken}'
+param containerAppEnvName string = 'albumapi_env'
 param containerRegistryName string = 'techconnect2025acr2'
 
 
