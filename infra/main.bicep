@@ -4,7 +4,7 @@ targetScope = 'subscription'
 
 param location string = 'westeurope'
 param environmentName string = 'tc2025workspacedemo'
-param resourceGroupName string = 'TC2025RGDemo'
+param resourceGroupName string = 'TC2025RGDemo3'
 param resourceToken string = toLower(uniqueString(subscription().id, location, resourceGroupName))
 param containerAppSrcName string = 'albumapi'
 param keyVaultKeyvault0Name string = 'keydyyom0${resourceToken}'
